@@ -1,0 +1,6 @@
+name: SyncCORE
+version: 1.0.0
+api: [3.0.0]
+description: SyncPVP Core
+main: Core\Core
+author: JamesCOMMANDO <--Add your names here too
