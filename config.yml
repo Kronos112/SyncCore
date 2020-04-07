@@ -4,3 +4,12 @@ api: [3.0.0]
 description: SyncPVP Core
 main: Core\Core
 author: JamesCOMMANDO <--Add your names here too
+
+permission:
+  core.mod:
+    description: Perms for Moderation
+    default: false
+
+commands:
+  test:
+    description: Test command

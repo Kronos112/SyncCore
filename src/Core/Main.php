@@ -4,12 +4,30 @@
 namespace JamesCOMMANDO;
 
 
+use Core\banUI\banUI;
+use Core\Core;
 use pocketmine\command\Command;
-use pocketmine\command\CommandSender;
 use pocketmine\event\Listener;
+use pocketmine\event\server\DataPacketSendEvent;
+use pocketmine\network\mcpe\protocol\DisconnectPacket;
 use pocketmine\plugin\PluginBase;
 
+
+
+
 class Main extends PluginBase implements Listener{
+
+
+
+    public function onLoad()
+    {
+        $this->getLogger()->info("loading...");
+        $this->unregisterCommand("mixer");
+        $this->unregisterCommand("ban");
+
+        $this->registerCommand(new banUI());
+    }
+
 
     public function onEnable()
     {
@@ -17,14 +35,28 @@ class Main extends PluginBase implements Listener{
         $this->getLogger()->alert("SyncCore Ready.");
     }
 
-    public function onCommand(CommandSender $sender, Command $command, string $label, array $args): bool
+
+    public function unregisterCommand(string $string):void
     {
-        switch ($command){
-            case "Test":
-                $sender->sendMessage("This is a test command.");
-                break;
-        }
-        return true;
+        $map = $this->getServer()->getCommandMap();
+        $cmd = $map->getCommand($string);
+        if ($cmd !== null) $this->getServer()->getCommandMap()->unregister($cmd);
     }
+
+    public function registerCommand(Command $command):void{
+        $this->getServer()->getCommandMap()->register($command->getName(), $command);
+    }
+
+    public function onDataPacketSend(DataPacketSendEvent $event){
+        $pk = $event->getPacket();
+        if($pk instanceof DisconnectPacket){
+            if($pk->message === "Internal server error") {
+                $pk->message = "Internal server error has been made please check the console for more info.";
+            }
+        }
+    }
+
+
+
 
 }
