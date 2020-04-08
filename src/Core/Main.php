@@ -6,6 +6,7 @@ namespace JamesCOMMANDO;
 
 use Core\banUI\banUI;
 use Core\Core;
+use Core\Commands\screenshare;
 use pocketmine\command\Command;
 use pocketmine\event\Listener;
 use pocketmine\event\server\DataPacketSendEvent;
