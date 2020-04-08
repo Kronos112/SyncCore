@@ -26,6 +26,7 @@ class Main extends PluginBase implements Listener{
         $this->unregisterCommand("ban");
 
         $this->registerCommand(new banUI());
+         $this->registerCommand(new ss());
     }
 
 
